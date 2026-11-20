@@ -1,0 +1,1234 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Basta Ascoltare: Il mistero del Castello di Copertino</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+<style>
+:root {
+  --bg: #020503;
+  --panel: #040a06;
+  --fg: #4dff88;
+  --dim: #23974d;
+  --line: #166a35;
+  --hi: #ffb347;
+  --font: "VT323", "Courier New", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 22px;
+  line-height: 1.25;
+}
+.screen {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-block: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.scan {
+  position: fixed; inset: 0; pointer-events: none; z-index: 5;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(0,0,0,.22) 3px, rgba(0,0,0,.22) 4px);
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+
+.bar {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px;
+  background: var(--fg); color: var(--bg);
+  padding: 2px 10px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.bar nav { display: flex; gap: 14px; }
+.bar nav a { padding: 0 4px; }
+.bar nav a[aria-current="page"] { background: var(--bg); color: var(--fg); }
+.bar nav a:hover { background: var(--bg); color: var(--fg); }
+
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 400px) minmax(0, 1fr);
+  gap: 0;
+  border: 2px solid var(--line);
+  border-top: 0;
+  background: var(--panel);
+}
+.side {
+  border-right: 2px solid var(--line);
+  padding: 12px 12px 16px;
+  min-width: 0;
+}
+.cap { color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 8px; }
+#tree { overflow-x: auto; padding-bottom: 6px; }
+.row {
+  display: flex; align-items: flex-start; width: 100%;
+  background: none; border: 0; padding: 0 4px; margin: 0;
+  font: inherit; color: var(--fg); text-align: left;
+  white-space: normal; cursor: pointer;
+}
+.row .tw { white-space: pre; flex: none; }
+.row .lb { min-width: 0; overflow-wrap: anywhere; }
+.row:hover { background: var(--line); }
+.row.sel { background: var(--fg); color: var(--bg); }
+.row .tw { color: var(--dim); }
+.row.sel .tw { color: var(--bg); }
+
+.center { padding: 20px clamp(14px, 4vw, 40px) 28px; min-width: 0; }
+.view[hidden] { display: none; }
+.logo {
+  margin: 4px 0 0;
+  font-weight: 400;
+  font-size: clamp(46px, 9.5vw, 98px);
+  line-height: .95;
+  letter-spacing: .08em;
+  text-shadow: 0 0 10px rgba(77,255,136,.45);
+}
+.mistero {
+  font-size: clamp(24px, 5vw, 42px);
+  margin-top: 5px;
+  color: var(--dim);
+  text-transform: none;
+}
+
+.sub { margin: 6px 0 0; color: var(--dim); text-transform: uppercase; letter-spacing: .14em; }
+.cur { display: inline-block; width: .55em; height: .9em; background: var(--fg); vertical-align: -.1em; margin-left: .12em; animation: blink 1.05s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.rule { border: 0; border-top: 2px dashed var(--line); margin: 22px 0; }
+
+form { display: grid; gap: 14px; max-width: 640px; }
+.fld { display: grid; gap: 2px; }
+.fld label { color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+.fld label::before { content: "> "; color: var(--fg); }
+input, textarea {
+  width: 100%;
+  font: inherit; color: var(--fg); caret-color: var(--fg);
+  background: transparent;
+  border: 0; border-bottom: 2px solid var(--line);
+  border-radius: 0;
+  padding: 4px 2px;
+}
+textarea { min-height: 7.5em; resize: vertical; border: 2px solid var(--line); padding: 6px 8px; }
+input:focus, textarea:focus { outline: none; border-color: var(--fg); background: rgba(77,255,136,.06); }
+::placeholder { color: var(--dim); opacity: .8; }
+.btns { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.btn {
+  display: inline-block;
+  font: inherit; color: var(--fg); background: transparent;
+  border: 2px solid var(--fg); padding: 2px 16px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: .1em;
+}
+.btn:hover { background: var(--fg); color: var(--bg); }
+#status { color: var(--hi); min-height: 1.25em; }
+
+/* Stile per il pulsante file personalizzato */
+.btn-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--fg);
+  color: var(--bg);
+  border: 2px solid var(--fg);
+  padding: 2px 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  width: fit-content;
+}
+.btn-file:hover {
+  background: transparent;
+  color: var(--fg);
+}
+.btn-file svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.path { color: var(--dim); margin: 0 0 10px; overflow-wrap: anywhere; }
+.doc { border: 2px solid var(--line); padding: 14px 16px; max-width: 70ch; }
+.doc.wide { max-width: 100%; }
+.doc h2, .letter h2 { margin: 0 0 10px; font-weight: 400; font-size: 1.5em; letter-spacing: .06em; text-transform: uppercase; }
+.letter { max-width: 62ch; }
+.letter p, .doc p, .doc div.body-content { margin: 0 0 16px; }
+.dim { color: var(--dim); }
+
+.msg-block {
+  margin: 18px 0;
+  padding-left: 15px;
+  border-left: 2px solid var(--line);
+  color: var(--fg);
+}
+
+/* Griglia Galleria Immagini */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 16px 0 20px;
+}
+.gallery-item {
+  border: 2px solid var(--line);
+  background: #010302;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color .15s, transform .15s;
+}
+.gallery-item:hover {
+  border-color: var(--fg);
+  background: rgba(77, 255, 136, .08);
+  transform: translateY(-2px);
+}
+.gallery-item img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: #fff;
+  display: block;
+}
+.gallery-item span {
+  font-size: 17px;
+  color: var(--fg);
+  text-align: center;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+/* Lightbox / Overlay Ingrandimento */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgba(2, 5, 3, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 12px;
+}
+.lightbox[hidden] { display: none !important; }
+.lb-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 900px;
+  color: var(--fg);
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 8px;
+}
+.lb-img-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  width: 100%;
+  max-width: 900px;
+}
+.lb-img-wrap img {
+  max-height: 72vh;
+  max-width: 100%;
+  object-fit: contain;
+  border: 2px solid var(--fg);
+  background: #fff;
+  box-shadow: 0 0 25px rgba(77, 255, 136, 0.25);
+}
+.lb-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.foot {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px;
+  background: var(--line); color: var(--fg);
+  padding: 2px 10px; text-transform: uppercase; letter-spacing: .06em;
+}
+
+@media (max-width: 760px) {
+  body { font-size: 20px; }
+  .main { grid-template-columns: minmax(0, 1fr); }
+  .side { border-right: 0; border-bottom: 2px solid var(--line); }
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .cur { animation: none; } }
+</style>
+
+<div class="screen">
+  <header class="bar">
+    <span>Basta Ascoltare: Il mistero del Castello di Copertino · Archivio · Terminale 01</span>
+    <nav aria-label="Menu principale">
+      <a href="#home" id="nav-home">[Home]</a>
+      <a href="#info" id="nav-info">[?]</a>
+    </nav>
+  </header>
+
+  <div class="main">
+    <aside class="side" aria-label="Elenco puntate">
+      <p class="cap">C:\BASTAASCOLTARE\PUNTATE</p>
+      <div id="tree" role="tree"></div>
+    </aside>
+
+    <main class="center">
+      <section class="view" id="view-home">
+        <h1 class="logo">BASTA<br>ASCOLTARE<span class="cur" aria-hidden="true"></span></h1>
+        <p class="mistero">Il mistero del Castello di Copertino</p>
+        <p class="sub">Archivio online · accesso riservato</p>
+        <hr class="rule">
+        <p class="cap">Scrivi all'archivio</p>
+        <form id="contact" novalidate>
+          <div class="fld"><label for="nome">Nome</label><input id="nome" name="nome" autocomplete="name" placeholder="come ti chiami"></div>
+          <div class="fld"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="dove possiamo risponderti"></div>
+          
+          <div class="fld">
+            <label>Allegato</label>
+            <label for="file" class="btn-file" tabindex="0">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+              <span id="file-label">SFOGLIA...</span>
+            </label>
+            <input type="file" id="file" name="file" style="display:none;" onchange="document.getElementById('file-label').textContent = this.files.length > 0 ? this.files[0].name : 'SFOGLIA...'">
+          </div>
+
+          <div class="fld"><label for="msg">Messaggio</label><textarea id="msg" name="msg" placeholder="scrivi qui..."></textarea></div>
+          <div class="btns">
+            <button class="btn" type="submit">[ Invia ]</button>
+            <span id="status" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="view letter" id="view-info" hidden>
+        <p class="path">C:\BASTAASCOLTARE\INFO\NOTA ANDREA.TXT</p>
+        <h2>NOTA DEL CURATORE</h2>
+        
+        <p>Se state leggendo queste pagine, significa che il mio lavoro di archiviazione è andato a buon fine.</p>
+        
+        <p>Sono Andrea Sarri, amministratore del sito ufficiale del podcast <em>Basta ascoltare: Il mistero del Castello di Copertino</em> (www.bastaascoltare.it). A quasi due mesi dall’ultima trasmissione, ho deciso di raccogliere, ordinare e trascrivere integralmente tutte le puntate originali, le registrazioni audio e i reperti documentali per trasformarli in questo libro. Volevo che ne restasse una traccia fisica, tangibile, qualcosa che non potesse essere cancellato con un semplice click o con il sequestro di un server. Con questo stesso scopo ho trasformato la show page del podcast in una directory pubblica e permanente.</p>
+        
+        <p>Da quella maledetta notte dell'Episodio 10, durante la diretta streaming nella Cappella di San Marco, Lorenzo ed Echo (il cui vero nome è Vittoria De Masi) sono scomparsi. Svaniti nel nulla, lasciandosi dietro solo un telefono frantumato e uno schermo nero.</p>
+        
+        <p>Molti ascoltatori e chi ha indagato credono che si tratti di una colossale messinscena. I giornali insinuano che Lorenzo e Vittoria siano scappati volontariamente, orchestrando una finta sparizione per creare hype, fare pubblicità al podcast e lucrare sul mistero. Una banale, macabra trovata di marketing… un tributo a Cannibal Holocaust di Deodato o, per i più giovani, a The Blair Witch Project.</p>
+        
+        <p>Ma chi ha lavorato con loro sa che non è così. Chi ha riascoltato la registrazione dell'ultima trasmissione sa che nessuno simulerebbe un terrore del genere. Nessuno frantumerebbe la propria vita in quel modo per qualche migliaio di follower.</p>
+        
+        <p>Io e pochi altri siamo convinti che c'è qualcosa di antico e affamato sotto il pavimento di quel castello, qualcosa che ha trovato il modo di nutrirsi attraverso i nostri stessi schermi. Deve essere qualcosa che manipola la realtà e le menti: perché nello streaming si parla di pavimento crollato. Ma il castello è integro e il pavimento è lì! Ci sono stato e l’ho visto! L’odore no, quell’odore di sangue e incenso lo si sente ancora… o, per lo meno, io l’ho sentito.</p>
+        
+        <p>Io non so che pensare, anche perché la stessa notte dello streaming e la mattina dopo, quando ancora non sapevamo nulla del fatto che Lorenzo e Vittoria fossero spariti, quando ancora erano solo dei timori del cerchio più stretto del podcast, prima che la loro scomparsa fosse di dominio pubblico e prima del clamore. È successo qualcosa che non mi so spiegare. Qualcosa da cui mi sono tenuto lontano per tutte queste settimane.</p>
+        
+        <p>Su bastaascoltare.it era ed è presente un form di contatto. Nel volgere di poche ore sono arrivati quattro messaggi ai quali non è stato possibile rispondere in quanto gli indirizzi mail sono stati cancellati o erano falsi al momento in cui sono stati inseriti. Ve li riporto nell’ordine in cui sono arrivati e lascio a voi trarre conclusioni:</p>
+        
+        <div class="msg-block">
+          <strong>A:</strong> scrivici@bastaascoltare.it<br>
+          <strong>Time:</strong> XX/XX/2026 h.04.18<br>
+          <strong>Da:</strong> L15_40@15.40<br>
+          <strong>Messaggio:</strong> Non siamo sotto il pavimento. Non ci sono porte, qui. C'è solo il rumore. Non lasciate acceso nessun monitor.
+        </div>
+
+        <div class="msg-block">
+          <strong>A:</strong> scrivici@bastaascoltare.it<br>
+          <strong>Time:</strong> XX/XX/2026 h.05.32<br>
+          <strong>Da:</strong> V15_40@15.40<br>
+          <strong>Messaggio:</strong> Lorenzo dice che non si deve rispondere. Che non si deve scrivere. Ma io ricordo ancora quello che hai detto, LobsterLow. Smettila di fingere di esserci.
+        </div>
+
+        <div class="msg-block">
+          <strong>A:</strong> scrivici@bastaascoltare.it<br>
+          <strong>Time:</strong> XX/XX/2026 h.06.12<br>
+          <strong>Da:</strong> 15_40@15.40<br>
+          <strong>Messaggio:</strong><br>
+          <strong>Allegato:</strong> Copertino_L_V.mp3<br>
+          Il file audio contiene sedici secondi di un silenzio quasi totale, rotto da un gocciolio denso su pietra. Negli ultimi istanti, due suoni, simili a rantolii, forse parole pronunciate a bassa voce.
+        </div>
+
+        <div class="msg-block">
+          <strong>A:</strong> scrivici@bastaascoltare.it<br>
+          <strong>Time:</strong> XX/XX/2026 h.08.27<br>
+          <strong>Da:</strong> 15_40@15.40<br>
+          <strong>Messaggio:</strong> Grazie 1540 volte. 👁️
+        </div>
+        
+        <p>Prima di pubblicare ho letto e riletto cento volte questi messaggi, ho cercato indirizzi e dominio, che sono ovviamente falsi. Così come illeggibili risultano i log del server per risalire agli indirizzi IP e altre informazioni utili. Solo queste quattro tracce nel giro di neanche 4 ore. Prima che chiunque potesse sapere, lontano da mitomani e burloni. Poi solo silenzio.</p>
+        
+        <p>Il sito del podcast rimarrà attivo e i file resteranno online a disposizione di chiunque voglia continuare a indagare, nonostante le pressioni per oscurarli, e per mantenere vivo il lavoro svolto da Lorenzo e Vittoria.</p>
+        
+        <p>Leggete questo libro, studiate i documenti, ma fate attenzione alle ombre e ai suoni che vi circondano. Non so se Lorenzo e Vittoria siano ancora là sotto o se facciano ormai parte della pietra, ma so che l'entità che li ha presi è lì ed è sempre in ascolto.</p>
+        
+        <p>A noi non resta che fare altrettanto.</p>
+        
+        <p>Basta ascoltare.</p>
+      </section>
+
+      <section class="view" id="view-file" hidden>
+        <p class="path" id="file-path"></p>
+        <div class="doc" id="doc-box">
+          <h2 id="file-title"></h2>
+          <div id="file-body" class="body-content dim"></div>
+          <div id="file-gallery" class="gallery-grid" hidden></div>
+          <button class="btn" type="button" id="file-back">[ Indietro ]</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="foot">
+    <span>Dati di esempio</span>
+    <span>F1 = ? · Esc = Home · Frecce = Scorri tavole</span>
+  </footer>
+</div>
+
+<!-- Finestra Lightbox per ingrandimento e scorrimento immagini -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true">
+  <div class="lb-header">
+    <span id="lb-caption"></span>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span id="lb-counter" class="dim"></span>
+      <button class="btn" type="button" id="lb-close-top" style="padding: 0 10px;">[ CLOSE ]</button>
+    </div>
+  </div>
+  <div class="lb-img-wrap">
+    <img id="lb-img" src="" alt="Immagine archivio">
+  </div>
+  <div class="lb-controls">
+    <button class="btn" type="button" id="lb-prev">[ &lt; PREC ]</button>
+    <button class="btn" type="button" id="lb-close">[ CLOSE ]</button>
+    <button class="btn" type="button" id="lb-next">[ SUCC &gt; ]</button>
+  </div>
+</div>
+
+<div class="scan" aria-hidden="true"></div>
+
+<script>
+var trascMarcoLText = ` ALLEGATO EPISODIO 1 – Trascrizione chat
+
+chat_log_03072008.txt
+
+Trascrizione da: 
+https://*******.it/****/copertinouberalles.html
+
+"Marco_elle" è on-line  
+"SaintGilles15_40" è "Disponibile".________________________________________
+📌 Post pubblico – 3 luglio, ore 21:18
+Marco_elle:
+Ciao a tutti, mi scuso se vado un po’ OT, ma ci provo lo stesso. 
+Sto cercando notizie su una mia zia, Carla L., restauratrice, scomparsa durante dei lavori al Castello di Copertino negli anni ’70.
+Mia madre racconta che sparì all’improvviso, nel 1973 o 1974, durante un restauro.
+All’epoca dissero che era scappata con un ragazzo, un biondino, ma in famiglia si è sempre glissato sul discorso… quasi come fosse un tabù parlarne. Mia madre era più piccola di Carla ma non ha mai creduto a quello che le dicevano i suoi.
+Sono andato più volte a vedere il Castello e la cappella dove lavorava mia zia… Mi sono sempre sentito strano e debilitato… La sentivo lì con me… penserete sia pazzo!
+Qualcuno del gruppo, magari più grande, ricorda qualcosa? Anche solo per sentito dire.
+Grazie mille 🙏
+(2 like · 4 commenti generici di curiosità)
+________________________________________
+💬 Commento – 3 luglio, ore 22:06
+SaintGilles15_40:
+Ciao Marco, sono Nico. Mio nonno ha lavorato lì in quegli anni. Se ti va, possiamo sentirci in privato: mi ha raccontato delle storie.
+________________________________________
+💬 Chat privata – Trascrizione da archivio locale
+________________________________________
+Marco_elle (h: 22:09):
+Ciao Nico! Grazie per aver risposto al post. Magari le storie di tuo nonno potrebbero aiutarmi!
+________________________________________
+SaintGilles15_40 (h: 22:36):
+Ciao Marco 🙂
+Mio nonno, Michele A., era il guardiano del Castello in quegli anni.
+________________________________________
+Marco_elle (h: 22:36):
+Guardiano?
+________________________________________
+SaintGilles15_40 (h: 22:37):
+Sì, ha lavorato lì dal ’68 al ’75.
+Poi ha deciso di licenziarsi e non ci è più voluto tornare…
+Non abbiamo mai capito davvero perché.
+Diceva che certe cose era meglio lasciarle come stavano.
+________________________________________
+Marco_elle (h: 22:39):
+Che intendi?
+________________________________________
+SaintGilles15_40 (h: 22:40):
+Be’, ogni tanto parlava di persone che “erano state prese dal Castello”.
+Lo diceva con una voce strana… come se non volesse davvero spiegare.
+Io ero piccolo, ma quella frase me la ricordo benissimo.
+________________________________________
+Marco_elle (h: 22:41):
+“Prese dal castello”? E che significa?
+________________________________________
+SaintGilles15_40 (h: 22:41):
+Non lo ha mai detto apertamente.
+Ma raccontava di una ragazza che è scomparsa… giovane, bella, alle prime armi. Ma parlava di una fine diversa… non di una fuga.
+________________________________________
+Marco_elle (h: 22:41):
+Forse era mia zia Carla!
+Mia mamma diceva che era partita per quel lavoro carica di speranze, ma poi qualcosa è cambiato; era turbata... diceva di aver trovato qualcosa… 
+________________________________________
+SaintGilles15_40 (h: 22:42):
+Dietro un muro?
+Nonno raccontava la stessa cosa: durante i lavori, il pavimento della cappella di San Marco era franato e avevano scoperto un arco murato, che non risultava nelle planimetrie.
+Diceva che si vedeva una porta di pietra… poi si fermava, mi guardava con gli occhi sbarrati e diceva: “Se l’avevano chiusa, c’era un motivo. Sarebbe stato meglio lasciarla così.”
+________________________________________
+Marco_elle (h: 22:43):
+Una porta? E mia zia???
+________________________________________
+SaintGilles15_40 (h: 22:44):
+Non parlava mai di quella porta.
+Cambiava discorso, come se si pentisse di aver detto troppo.
+Ripeteva solo che la ragazza non doveva scendere, che avrebbe dovuto farsi i fatti suoi. Che quella cosa l’aveva turbata e cambiata… specialmente dopo che era successo… quello che era successo.
+________________________________________
+Marco_elle (h: 22:46):
+Mamma dice che Carla era felicissima, era il suo primo incarico importante.
+Ma poi iniziò a dire di sentire dei bisbigli durante il lavoro… Mamma diceva che durante quel cantiere era cambiata… 
+Non ho mai capito se in meglio o in peggio… Ma poi dopo era successo qualcosa di cui non hanno mai voluto parlare in famiglia e poco dopo dicono che sia scomparsa. 
+Mamma era legatissima a sua sorella Carla che era più grande di lei di qualche anno: dice sempre che la sua sorellona non può essere scappata… ma i miei nonni non si sono mai lasciati sfuggire nulla!
+________________________________________
+SaintGilles15_40 (h: 22:47):
+Le voci… i sussurri… quel soffio leggero su quel collo giovane… al buio.
+Tutto quel dolore… è vero: non avrebbe mai lasciato la sua sorellina.
+________________________________________
+Marco_elle (h: 22:48):
+Che vuoi dire, scusa? Come “la sua sorellina”?
+________________________________________
+SaintGilles15_40 (h: 22:50):
+Nonno lo diceva sempre e si spaventava da morire: quella pietra respira… Rantola, è meglio!
+E lui, credimi, non aveva paura di niente: aveva fatto la guerra, aveva dormito tra i morti.
+Ma di quella porta aveva un terrore vero.
+________________________________________
+Marco_elle (h: 22:50):
+Gesù… mi stai mettendo i brividi.
+Dopo la storia dei sussurri, zia è scomparsa. Mamma non si è più data pace…
+________________________________________
+SaintGilles15_40 (h: 22:52):
+Sai, in quegli anni tanti partivano per la Germania.
+Magari si è innamorata ed è andata via. Anche se per lei non è andata così… storia triste!
+________________________________________
+Marco_elle (h: 22:52):
+Che è successo? 
+Che storia triste? 
+Che vuoi dire?
+________________________________________
+SaintGilles15_40 (h: 22:53):
+Che l’amore porta conseguenze…
+Nonno parlava di un biondino, un muratore del cantiere, che le faceva il filo…
+E anche quel ragazzo diceva sempre che…
+________________________________________
+Marco_elle (h: 22:53):
+Che cosa diceva il tipo??? Mamma non sa niente di questo tipo!
+________________________________________
+SaintGilles15_40 (h: 22:54):
+Che sentiva chiamare il suo nome.
+Una volta nonno lo trovò con l’orecchio appoggiato al pavimento.
+Gli chiese che stava facendo, e lui rispose: “Ascolto. Non senti che sotto parlano?”.
+________________________________________
+Marco_elle (h: 22:55):
+Quindi c’era davvero una scala che scendeva sotto la chiesa?
+E perché non ne parla nessuno?
+________________________________________
+SaintGilles15_40 (h: 22:56):
+L’hanno murata subito dopo.
+Ufficialmente “per motivi di sicurezza”.
+Ma io ho visto le foto di mio nonno: un muro nuovo, fresco, proprio sotto la cappella di San Marco.
+Diceva che dentro c’erano simboli incisi sulla pietra, non cristiani.
+E un odore fortissimo… come di ruggine e incenso.
+________________________________________
+Marco_elle (h: 22:58):
+Ruggine e incenso…
+Strano, mia madre ricordava che Carla aveva parlato proprio di “un odore metallico, dolciastro”.
+________________________________________
+SaintGilles15_40 (h: 23:00):
+Marco, vuoi sapere una cosa?
+La porta è ancora lì. Sigillata, ma c’è. 
+Io passo davanti al castello ogni settimana.
+Un mio amico lavora alla biglietteria: mi fa entrare anche fuori orario.
+Se vuoi… possiamo andare a dare un’occhiata. Io porto la torcia.
+________________________________________
+Marco_elle (h: 23:01):
+Dopo tutto quello che mi hai raccontato, non so se voglio vederla sinceramente. 
+Mi sembra una follia. Non incontro gente a caso, conosciuta sui forum di notte.
+________________________________________
+Marco_elle (h: 23:08): 
+Nico???
+________________________________________
+Marco_elle (h: 23:32): 
+Nico, ci sei?
+________________________________________
+SaintGilles15_40 (h: 23:49): 
+Capisco la paura. Ma sai, certe cose non smettono di cercarti se non le guardi in faccia. E poi… mio nonno prima di andarsene via ha preso una cosa da lì sotto. Prima che murassero tutto.
+________________________________________
+Marco_elle (h: 23:50): 
+Eri sparito… di che cosa stai parlando? Che cosa ha preso?
+Mi fai venire i brividi eppure non riesco a mandarti affan…
+________________________________________
+SaintGilles15_40 (h: 23:51): 
+Immagino… Ma mi piace aiutare. E mi piace ascoltare quel dolore che raccontava mio nonno. Il dolore di Carla, dei topini e di tutti gli altri!
+________________________________________
+Marco_elle (h: 23:52): 
+Sono sempre più convinto che tu sia pazzo! Ma cosa aveva trovato tuo nonno? 
+________________________________________
+SaintGilles15_40 (h: 23:52): 
+Una cosa di tua zia Carla. Una cosa che potrebbe aiutare tua madre a capire: un piccolo quaderno nero. 
+Nonno lo trovò per terra, vicino all'affresco di San Sebastiano e lo teneva sempre con sé.
+________________________________________
+Marco_elle (h: 23:53): 
+Un quaderno? Stai scherzando? Mandami una foto subito.
+________________________________________
+SaintGilles15_40 (h: 23:54):
+Nessuna foto. Se vuoi capire cosa le è successo, te lo do di persona. Tua madre ha pianto per anni senza sapere la verità. Io te la sto offrendo.
+________________________________________
+Marco_elle (h: 23:55): 
+Non è uno scherzo vero? Perché se è uno scherzo è di pessimo gusto. Questa cosa mi fa paura, Nico.
+________________________________________
+SaintGilles15_40 (h: 23:59): 
+Nessuno scherzo. Solo una cosa rimasta chiusa troppo a lungo. E forse lei è ancora lì che aspetta.
+________________________________________
+Marco_elle (h: 23:59): 
+Dai, ci penso! Ma tu porta quel quaderno. 'notte!
+________________________________________
+SaintGilles15_40 (h: 02:54): 
+Ok! Se cambi idea, questa è la posizione.
+________________________________________
+SaintGilles15_40 (h: 02:55): ha inviato la sua posizione
+________________________________________
+SaintGilles15_40 (h: 02:55):
+Non serve coraggio.
+Basta ascoltare.
+👁️🗨️
+________________________________________
+(“Marco_elle” è off-line dal 4 luglio alle ore 16:22.
+“SaintGilles15_40” è “Non disponibile” dal 4 luglio alle ore 16:07.)  ________________________________________
+`
+;
+var trascMartyText = `ALLEGATO EPISODIO 2 – Thread archiviato
+
+📁 [Trovato su r/ItalianHorror]
+Titolo: Ho scaricato il video di MartyGhost. Non guardatelo. 
+Postato da u/LastUpload_93 — 6 giorni fa
+________________________________________
+Ok, ragazzi, vi prego di non ridere. 
+Ho trovato un file su un gruppo Telegram locale (Copertino / Salento urbex).
+Dicevano che era l’ultimo video di una streamer scomparsa anni fa a novembre. 
+Il nome del file è “MartyGhost_02_11.mp4”.
+Ho provato a vederlo. 
+Non riesco più a dormire.
+________________________________________
+📹 [Trascrizione parziale del video]
+00:00 – Rumore di passi. Si sente respirare forte.
+MARTY: “Ok… dentro. Sono dentro. Nessun guardiano. Due e trentacinque. Santo Dio.”
+La torcia illumina una parete piena di muschio e umidità. Gocciola qualcosa. Ogni passo risuona lungo un corridoio stretto. L’audio è distorto.
+Si sente un fruscio, come una voce che prova a formare parole dal rumore stesso. 
+In mezzo al crepitìo si distingue per un istante una frase spezzata:
+“ba...sta...”
+MARTY: “Il segnale va e viene, raga. Ma registro. Se non parte la live, carico dopo.”
+Silenzio di venti secondi. Poi un suono simile a un respiro dietro di lei.
+MARTY: “C’è qualcuno? È una guardia?!”
+Nulla. Si sente solo il gocciolio e il respiro accelerato.
+MARTY (sottovoce): “C’è un odore di ferro. Forte. Come… sangue.”
+Un bip. Sullo schermo compare un messaggio in sovrimpressione (probabilmente un bug di rete):
+📱 SaintGilles15_40: Ti sento.
+📱 SaintGilles15_40: Ti vedo.
+📱 SaintGilles15_40: Scendi ancora.
+L’audio si comprime, come se fosse risucchiato da un tubo metallico.
+________________________________________
+💬 Commenti Reddit
+u/GiuliaSkept:
+Ragazzi ma è palesemente finto. Si sente che è recitato.
+
+u/LocalCopertino:
+No, giuro che la tipa esisteva davvero, io la conoscevo! Faceva urbex tra Nardò e Lecce. 
+Il suo canale IG è ancora online, ma i video sono stati cancellati tutti meno uno.
+________________________________________
+📹 [00:03 – audio peggiora]
+Il fascio della torcia si muove tra feritoie e vecchie carrozze. 
+L’audio comincia a distorcersi come se ci fosse un’interferenza bassa.
+Sussurro, appena udibile:
+“saa… tìna… naa… tì…”
+📱 SaintGilles15_40: Sei stanca di curarla? Vuoi che finisca, vero? Che sollievo se morisse!
+MARTY: “Chi cxxxo c’è? Se è uno scherzo non fa ridere!”
+________________________________________
+💬 Commenti Reddit
+u/LocalCopertino:
+Agghiacciante: sua madre era allettata, era malata terminale, lei passava tutto il tempo a prendersene cura, giorno e notte a cambiarle le flebo, cateteri, sacche varie! Era a pezzi, andare in giro per esplorazioni era l’unica via di fuga da quella realtà che la stava mandando fuori di testa!
+________________________________________
+📹 [00:04 – audio peggiora]
+Una porta si chiude da sola. L’eco sembra infinita. L’audio si taglia per due secondi.
+📱 SaintGilles15_40: Dietro di te. 
+📱 SaintGilles15_40: Non correre. 
+📱 SaintGilles15_40: È tardi per chiudere gli occhi.
+MARTY (urlando): “Non scrivete quella m***a! Non sto nemmeno in live!”
+Un colpo secco. Qualcosa sfiora la telecamera. 
+Un’ombra nera passa oltre il fascio di luce.
+La torcia traballa, la luce cade sul pavimento bagnato. Ci sono orme. 
+Due serie: una sua, e altre più grandi che vanno verso di lei.
+Nuovo bip:
+📱 SaintGilles15_40: Basta Ascoltare.
+MARTY (sottovoce): “Chi cxxxo è che mi scrive questo? Non ho linea… non ho linea…”
+Il GPS è morto. Niente segnale. Niente barra. Niente mondo.
+L’audio gracchia. Il sussurro si fa più chiaro, come se rispondesse a quella frase.
+“Baaasta… ascoltaaare…”
+________________________________________
+💬 Commenti Reddit
+u/VHScollector:
+Frame 00:04:32 — fermate l’immagine, dietro la colonna a sinistra c’è una mano che spunta. 
+Giuro su Dio.
+u/_TornInHalf:
+Confermo. Non è un glitch. Si vedono cinque dita e sono troppo lunghe.
+u/Undercoverfatboy:
+Il glicht è sul vostro pc: non si vede proprio niente! Non ci sono mani o altro…
+Forse solo problemi di compressione delle vostre schede video o la voglia di vedere qualcosa!
+________________________________________
+📹 [00:05 – disturbi gravi]
+Sul display compaiono righe di testo come interferenze:
+📱 SaintGilles15_40: Ti chiamano, ma non sei tu. 
+📱 SaintGilles15_40: La voce sotto il pavimento ha fame. 
+📱 SaintGilles15_40: Non dovevi scendere. Ora ascolta.
+La torcia lampeggia. L’immagine vibra. 
+Da lontano, si sente di nuovo quel respiro umido.
+MARTY (piangendo): “Chi sei? Dimmi chi sei!”
+📱 SaintGilles15_40: Il muro respira con me. 
+📱 SaintGilles15_40: Sei arrivata alla porta.
+________________________________________
+📹 [00:06 – momento finale]
+Marty cade. La torcia rotola, si ferma rivolta verso il corridoio. 
+La camera è inclinata, riprende in obliquo.
+Il buio respira. Letteralmente. 
+Si sente un soffio regolare, umido, come se le pareti stessero inspirando.
+MARTY (piangendo): “Basta… vi prego…”
+Un passo. Poi un altro. Lentissimo. 
+Entra nel cono di luce una figura scura, il volto coperto, le mani bianche come cera.
+La figura si ferma. La testa si piega di lato, come se osservasse la telecamera. Non si vede il volto, solo si percepiscono due fosse nere, due abissi profondi al posto degli occhi. 
+Un bip finale:
+📱 SaintGilles15_40: Non guardare in alto. 
+📱 SaintGilles15_40: Ora sei qui.
+Marty urla. 
+Il telefono cade definitivamente.
+Si sente solo il suo respiro, un urto, poi il rumore di trascinamento.
+Ultimo frame: il suo piede, scalzo, che si muove. 
+Una mano sottile lo afferra alla caviglia e tira con forza.
+Il corpo scompare lentamente nel buio.
+Si sente uno schiocco, poi silenzio.
+Una voce, quasi un respiro:
+“torna… giù…”
+________________________________________
+
+💬 Commenti Reddit
+u/Fretta88:
+Raga non è un filmato. Io ho sentito quella voce. 
+Stessa identica cosa, nel pozzo del cortile interno. 
+Quando ero piccolo.
+u/ArchivioSud:
+Confermo che nei sotterranei del castello c’è una zona murata. 
+Nessuno ci entra da decenni. 
+C’è una leggenda: chi sente la voce, non torna in superficie intero.
+u/ModTeam:
+🔒 Questo thread è stato chiuso per violazione della regola 3: contenuti potenzialmente reali / materiale snuff.
+________________________________________
+🩸 Ultimo aggiornamento
+Il file originale è stato rimosso da tutti i mirror conosciuti.
+Il telefono di MartyGhost è stato trovato, nessuno sa come, a dieci metri dal ponte del Castello di Copertino, 
+ai piedi della “Casa delle decime”.
+La torcia era ancora accesa. 
+La batteria quasi completamente scarica.
+La registrazione, invece, continuava.
+Solo suono statico.
+E, a intervalli regolari, un respiro.
+Poi una voce, flebile, quasi umana:
+“Basta… Ascoltare.”
+(silenzio di 6 secondi) 
+(file corrotto)
+________________________________________`
+;
+
+var diarioCarlaText = `ALLEGATO EPISODIO 6 – Il Diario di Carla L. (Trascrizione OCR di Lorenzo Ferri)
+
+2 Novembre, Castello di Copertino
+Lo psicologo dice che scrivere mi aiuterà a "processare". Processare cosa? Il vuoto? L'idea che il piccolo A. non sia mai esistito se non come un nome sulla cartella di un ospedale? Non importa. Devo farlo.
+Oggi, un venerdì mattina qualunque. C'è un vento gelido che fischia contro il loggiato. Ero nella Cappella di San Marco, stavo pulendo un po’ di pietra leccese che ha sfarinato attorno all'altare... La donna delle pulizie non ci passa neanche da qua… L'aria, di solito stantia, oggi era diversa. C'era un odore intenso... di ferro, di ruggine, forte come sangue fresco.
+L’ho trovato sotto il grande affresco di San Sebastiano, proprio dove il pavimento di pietra incontra la parete. Un piccolo fagotto scuro, legato con uno spago sottile. L'ho aperto con un batticuore nervoso, sperando fosse un brutto scherzo e invece... erano piccoli corpi essiccati, quasi mummificati. Topi, forse. Ma così contorti. C'era un biglietto. Scritto a mano, con un inchiostro spesso, quasi nero.
+
+"Basta ascoltare!
+SaintGilles15-40"
+L'ho buttato via subito, dicendo a me stessa che era uno scherzo di pessimo gusto di qualche ragazzino entrato inosservato. Ma l'odore di ferro mi è rimasto attaccato addosso per ore.
+
+7 Dicembre, Castello di Copertino
+È successo di nuovo. Primo venerdì del mese. Stesso posto, sotto Sebastiano. Un altro fagotto, questa volta più umido, più scuro. I resti all'interno erano meno rinsecchiti: sembravano più mollicci. E l'odore... oh Dio, l'odore di sangue era così forte che ho dovuto appoggiarmi al muro per non cadere.
+Il biglietto era identico.
+"Basta ascoltare!
+SaintGilles15-40"
+Non è un caso. Lo sento. Da quando scrivo questo diario, noto di più. E l'ho notata.
+La donna anziana. Ogni primo venerdì del mese, viene in visita. Arriva puntuale, a mezz’ora dalla chiusura. Curva, minuscola, avvolta in un cappotto marrone che sembra fatto di corteccia. Sembra un tronco di vite, invecchiata e avvizzita. E quegli occhi! Non sono neri, sono bui… come una tomba!
+Paga il biglietto, fa un giro rapido, sussurra qualcosa e se ne va.
+Oggi, mentre la guardavo strisciare lungo il ponte, le sue parole mi sono rimaste in testa. Erano sommesse, un mormorio, ma nella mia mente risuonano come un'eco in una stanza vuota. Cosa ha detto? Non riuscivo a capire.
+Il mio cuore batte all'impazzata. Devo sapere. Devo ascoltare.
+
+7 Gennaio
+Sono andata nell'ufficio anagrafe del paese, ho frugato nei vecchi archivi che riguardano il Castello. Ho parlato con i vecchi del luogo, ho fatto domande vaghe. I colleghi mi guardano male, pensano che la depressione mi stia facendo fissare.
+Ma l'ho trovata. È proprio lei! Il racconto di una donna, una mammana, che faceva "interventi" in clandestinità. Vissuta e… morta anni fa! Chi la ricorda la ricorda e la descrive con la stessa corporatura, lo stesso aspetto, uno sguardo identico a quello che incrocio ogni primo venerdì del mese... lo stesso cappotto. 
+Maledetta! È lei. Non può essere.
+SaintGilles15-40. Sant’Egidio… Ho provato a cercare nei giornali, negli archivi della soprintendenza! Niente! Niente sui libri, niente sulle pubblicazioni… Non esiste niente di Sant’Egidio nel Castello di Copertino! Solo vecchie voci e nulla più!
+Una cosa intrappolata tra la storia antica e moderna. Una cosa intrappolata nella mia testa… Devo fare attenzione a non lasciarmi sprofondare. 
+DEVO RICORDARMI DI PRENDERE LE GOCCE!
+
+1 Febbraio
+Il primo venerdì di febbraio. Questa volta non ho aspettato di trovarlo. Sono andata direttamente sotto San Sebastiano. Era lì. Più grande, il panno zuppo. L'odore di ferro era così intenso che potevo sentirlo attraversare il naso, nella gola, sulla lingua. Potevo assaggiarlo.
+E mentre ero lì, tremante, le parole della vecchia sono tornate. Non come un mormorio, ma come un colpo di tosse secca, proprio dietro il mio orecchio, pur essendo sola.
+"Basta Ascoltare."
+L'ho capito. Le parole che sussurra ogni volta che lascia il Castello, e che ora sembrano il sottofondo costante della mia vita. Basta Ascoltare. Basta Ascoltare. Basta Ascoltare. Basta Ascoltare. Basta Ascoltare. Basta Ascoltare!
+Ho cercato l'anziana nei ricordi dei custodi e dei miei colleghi… di ogni primo venerdì del mese. La vedo entrare. La vedo passare il portone, pagare. Ma quando arriva nelle gallerie... sparisce! L’ho seguita… mentre cammina, si vede come una… come una nebbiolina che sparisce, vibra nell’aria come un segnale radio disturbato…
+Non riesco a vederla. È lui: SaintGilles15-40 non me la fa vedere. Mi sta prendendo in giro.
+Le gocce Carla! Le stai prendendo, Carla? Sì, sì… le sto prendendo, Carla… LE STO PRENDENDO, CARLA?
+
+1 Marzo
+Non ho dormito per giorni. L'ossessione mi consuma. Le gocce non bastano. Non vado più dallo psicologo. Non mangio. Scrivo solo qui. Loro non capirebbero. Loro non ascoltano, quando in realtà basterebbe… basta ascoltare! La boccetta delle gocce è sul comodino. Non riesco a non guardarla.
+Ho sentito i lamenti stanotte. Un suono basso, rasposo, che sembrava provenire non da sotto il pavimento, ma dalle mie ossa.
+Oggi è il primo venerdì. Era qui, l'ho vista. Ho aspettato. Ho aspettato che arrivasse il momento di lasciare il castello. Ma è tornata indietro. Non è uscita.
+L'ho seguita. Il mio cuore è una campana impazzita nella cassa toracica. L'ho seguita nella Cappella di San Marco.
+Era inginocchiata. Il vecchio cappotto a terra, il piccolo fagotto scuro stretto tra le mani scheletriche. Un rumore sordo, come un battito ritmico e affamato, veniva da sotto le vecchie pietre del pavimento, proprio sotto l'affresco di San Sebastiano. Un rumore che non potevo più negare.
+L'ho chiamata. La mia voce era un rantolo.
+Lei si è voltata. Ha mostrato il suo viso. I pochi denti gialli e marroni, come se fossero stati spazzolati con terra e... sì, sangue. Ha sorriso e i suoi occhi erano vuoti, bui… come una tomba… ma pieni di un'antica, feroce intelligenza.
+Ha aperto il fagotto e me lo ha mostrato.
+Non erano topi rinsecchiti. Non questa volta. Era... era troppo piccolo, troppo umano. Era il prodotto di un'interruzione. Con una chiarezza che ha trafitto il mio dolore, lei ha sussurrato:
+“È il piccolo A.! È tuo figlio.”
+In quel momento, il rumore sotto il pavimento è diventato un tuono. La pietra ha tremato. L'odore di ferro era così denso che mi ha soffocato. Tutto è diventato nero.
+
+2 Marzo
+Sono qui. Sono sveglia. Non l'ho sognato. La depressione non c’entra. Ero sorda.
+Lui vuole il suo banchetto, SaintGilles15-40. E vuole la mia anima come antipasto. Lo sento strisciare sotto di me, affamato, la sua voce antica… che riempie il mio cranio di 15:40.
+Non devo parlare a nessuno. Basta ascoltare! Devo solo agire.
+Sono colpevole. Sono dannata. Il piccolo A. è un'offerta mancata.
+Ma ora posso pagare. Posso unirmi al coro. Basta Ascoltare.
+Il castello ha fame. Il Signore ha fame di me.
+
+Addio.
+Saint Gilles, mio Signore,
+BASTA ASCOLTARE.
+(La pagina si interrompe con un grande, sbavato segno di inchiostro, come se la penna fosse caduta dalla mano.)`;
+
+var diarioCarlaImages = [
+  { src: "Diario Carla/1.jpg", title: "Pagina 01" },
+  { src: "Diario Carla/2.jpg", title: "Pagina 02" },
+  { src: "Diario Carla/3.jpg", title: "Pagina 03" },
+  { src: "Diario Carla/4.jpg", title: "Pagina 04" },
+  { src: "Diario Carla/5.jpg", title: "Pagina 05" },
+  { src: "Diario Carla/6.jpg", title: "Pagina 06" },
+  { src: "Diario Carla/7.jpg", title: "Pagina 07" },
+  { src: "Diario Carla/8.jpg", title: "Pagina 08" },
+  { src: "Diario Carla/9.jpg", title: "Pagina 09" },
+  { src: "Diario Carla/10.jpg", title: "Pagina 10" },
+  { src: "Diario Carla/11.jpg", title: "Pagina 11" }
+];
+
+var appuntiImages = [
+  { src: "altri documenti/appunti Lorenzo/5 topini.jpeg", title: "5 topini" },
+  { src: "altri documenti/appunti Lorenzo/Biscotti e San Sebastiano.jpeg", title: "Biscotti e San Sebastiano" },
+  { src: "altri documenti/appunti Lorenzo/Carla e il suo diario.jpg", title: "Carla e il suo diario" },
+  { src: "altri documenti/appunti Lorenzo/Carlo CCTV.jpg", title: "Carlo CCTV" },
+  { src: "altri documenti/appunti Lorenzo/Cielo di Cenere.jpg", title: "Cielo di Cenere" },
+  { src: "altri documenti/appunti Lorenzo/Cielo di Cenere 2.jpg", title: "Cielo di Cenere 2" },
+  { src: "altri documenti/appunti Lorenzo/Destino di Marco Le.jpeg", title: "Destino di Marco Le" },
+  { src: "altri documenti/appunti Lorenzo/Marco e Marthy.jpeg", title: "Marco e Marthy" },
+  { src: "altri documenti/appunti Lorenzo/Occhio nello spioncino.jpeg", title: "Occhio nello spioncino" },
+  { src: "altri documenti/appunti Lorenzo/Pianta.jpeg", title: "Pianta" },
+  { src: "altri documenti/appunti Lorenzo/Seguences.jpeg", title: "Seguences" },
+  { src: "altri documenti/appunti Lorenzo/Vis De Saint Gilles.jpg", title: "Vis De Saint Gilles" }
+];
+
+var episodes = [
+  { 
+    n: 1, 
+    title: "Come tutto ha inizio", 
+    audio: "audio/Puntata 1 Come tutto ha inizio.mp3", 
+    audioDesc: "<p>Tutto ha inizio con una scoperta inaspettata in un fascicolo d'inchiesta. Lorenzo intraprende una strada che lo porterà lontano.</p><p class='dim'>Riproduzione traccia audio:</p>",
+    docs: [ 
+      { 
+        name: "Documento 1.1 - Forum copertinouberalles", 
+        f: "FORUM_2008.HTML", 
+        forumUrl: "documenti episodi/Episodio_1_FORM.html"
+      },
+      { 
+        name: "Documento 1.2 - Trascrizione chat", 
+        f: "DOC1.TXT", 
+        content: trascMarcoLText 
+      }
+    ] 
+  },
+  { n: 2, title: "Una prima traccia", docs: [ { 
+        name: "Documento 2.1 - Pagina ItalianHorror", 
+        f: "Episodio_2_IH.html", 
+        forumUrl: "documenti episodi/Episodio_2_IH.html"
+      },{ name: "Documento 2.2 - Thread archiviato", f: "DOC2.TXT" ,content: trascMartyText } ] },
+  { n: 3, title: "Salento Nero", docs: [ { name: "Documento 3. Racconto “I biscotti di San Sebastiano”", f: "DOC3.TXT" } ] },
+  { n: 4, title: "Siamo seguiti!", docs: [
+      { name: "Documento 4.1: Messaggio Diretto di Graziano Meliti a @EchoGirl", f: "DOC4_1.TXT" },
+      { name: "Documento 4.2: Post “Alfonso. Basta ascoltare!” e relativi commenti", f: "DOC4_2.TXT" }
+  ] },
+  { n: 5, title: "I cinque topini", docs: [
+      { name: "Documento 5.1: Articolo da “La Voce del Salento”", f: "DOC5_1.TXT" },
+      { name: "Documento 5.2: Trascrizione nastro magnetico (Reperto giudiziario)", f: "DOC5_2.TXT" }
+  ] },
+  { n: 6, title: "Il Diario di Carla", docs: [
+      { name: "Documento 6.1. Il Diario di Carla L. (Trascrizione OCR)", f: "DOC6_1.TXT", content: diarioCarlaText },
+      { name: "Documento 6.2. Il Diario di Carla L. (Scansione originale)", f: "DOC6_2_SCANSIONI\\", gallery: diarioCarlaImages, galleryDesc: "Scansioni originali del quaderno in pelle nera di Carla L. (1973–1974). Clicca su una pagina per ingrandirla e sfogliare il diario." }
+  ] },
+  { n: 7, title: "L'occhio di vetro", docs: [
+      { name: "Documento 7.1: Email di Anna R.", f: "DOC7_1.TXT" },
+      { name: "Documento 7.2: File allegato Registro_Turno_CarloR*****.pdf", f: "DOC7_2.PDF" }
+  ] },
+  { n: 8, title: "Il cielo di cenere", docs: [
+      { name: "Documento 8.1: Regio Esercito (Caporale Fante Coralli Giuseppe)", f: "DOC8_1.TXT" },
+      { name: "Documento 8.2: United States Army (Pfc. Hatton Thomas R.)", f: "DOC8_2.TXT" },
+      { name: "Documento 8.3: War Office / Casualty Branch (Corporal Davies William James)", f: "DOC8_3.TXT" },
+      { name: "Documento 8.4: Ufficio di Sanità Militare di Copertino (Aviere Manca Luciano)", f: "DOC8_4.TXT" }
+  ] },
+  { n: 9, title: "La Geometria del Male", docs: [] },
+  { n: 10, title: "LIVE STREAM", live: true, docs: [] }
+];
+
+var otherDocs = [
+  { name: "1. Appunti Lorenzo", f: "APPUNTI_LORENZO\\", gallery: appuntiImages, galleryDesc: "Lorenzo amava disegnare sul suo tablet durante le riunioni di redazione o quando ragionava sui casi.\nQueste sono alcune delle immagini che ci ha inviato sui gruppi di lavoro.\n\nClicca su una tavola per ingrandirla e scorrere l'archivio." },
+  { 
+    name: "2. Software", 
+    children: [
+      { 
+        name: "Basta_Ascoltare_CCTV_Lab.exe", 
+        f: "BASTA_ASCOLTARE_CCTV_LAB.EXE", 
+        download: "altri documenti/Software/BASTA ASCOLTARE CCTV LAB 1.1.2/Basta_Ascoltare_CCTV_Lab.exe" 
+      },
+      { 
+        name: "README.txt", 
+        f: "README.TXT", 
+        textFile: "altri documenti/Software/BASTA ASCOLTARE CCTV LAB 1.1.2/README.txt" 
+      }
+    ]
+  },
+  { 
+    name: "3. Audio messaggio", 
+    f: "Copertino_L_V.mp3", 
+    audio: "altri documenti/Audio messaggio/Copertino_L_V.mp3",
+    audioDesc: "<p>Riproduzione file audio inviato a: scrivici@bastaascoltare.it</p><p>Time: XX/XX/2026 h.06.12</p><p>Da: 15_40@15.40</p><p>Messaggio:</p><p>Allegato: Copertino_L_V.mp3</p>"
+  },
+  { 
+    name: "4. Video Streaming", 
+    f: "VIDEO_STREAMING.MP4", 
+    video: "altri documenti/Video streaming/VIDEO_STREAMING.mp4" 
+  }
+];
+
+var open = {};          
+var selected = null;    
+var tree = document.getElementById('tree');
+
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+function addRow(prefix, mark, label, id, opts) {
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'row' + (selected === id ? ' sel' : '');
+  b.setAttribute('role', 'treeitem');
+  if (opts.folder) b.setAttribute('aria-expanded', open[id] ? 'true' : 'false');
+  var tw = document.createElement('span');
+  tw.className = 'tw';
+  tw.textContent = prefix;
+  b.appendChild(tw);
+  var lb = document.createElement('span');
+  lb.className = 'lb';
+  lb.textContent = mark + label;
+  b.appendChild(lb);
+  b.addEventListener('click', opts.onClick);
+  tree.appendChild(b);
+}
+
+function addNodes(nodes, prefix) {
+  nodes.forEach(function (node, i) {
+    var last = i === nodes.length - 1;
+    var conn = prefix + (last ? '└─ ' : '├─ ');
+    if (node.folder) {
+      addRow(conn, open[node.id] ? '[-] ' : '[+] ', node.label, node.id, {
+        folder: true,
+        onClick: function () { open[node.id] = !open[node.id]; render(); }
+      });
+      if (open[node.id]) addNodes(node.children, prefix + (last ? '   ' : '│  '));
+    } else {
+      addRow(conn, '', node.label, node.id, {
+        onClick: function () { selected = node.id; showFile(node); render(); }
+      });
+    }
+  });
+}
+
+function docNodes(list, base, pathBase) {
+  return list.map(function (d, i) {
+    var id = base + '/' + i;
+    if (d.children) {
+      return { 
+        folder: true, 
+        label: d.name, 
+        id: id, 
+        children: docNodes(d.children, id, pathBase + d.name.toUpperCase() + '\\') 
+      };
+    }
+    return { 
+      label: d.name, 
+      id: id, 
+      path: pathBase + d.f, 
+      title: d.name, 
+      gallery: d.gallery || null,
+      audio: d.audio || null,
+      audioDesc: d.audioDesc || null,
+      video: d.video || null,
+      url: d.url || null,
+      forumUrl: d.forumUrl || null,
+      download: d.download || null,
+      textFile: d.textFile || null,
+      content: d.content || null,
+      body: d.galleryDesc || 'Il documento verrà mostrato qui.' 
+    };
+  });
+}
+
+function render() {
+  tree.innerHTML = '';
+  episodes.forEach(function (ep) {
+    var id = 'p' + ep.n;
+    var base = 'C:\\BASTAASCOLTARE\\PUNTATA' + pad(ep.n) + '\\';
+    var epLabel = 'Episodio ' + ep.n + ': ' + ep.title;
+    addRow('', open[id] ? '[-] ' : '[+] ', 'PUNTATA ' + pad(ep.n), id, {
+      folder: true,
+      onClick: function () { open[id] = !open[id]; render(); }
+    });
+    if (!open[id]) return;
+    var epNode = { 
+      label: epLabel, 
+      id: id + '/ep', 
+      path: base + 'EPISODIO.MP3', 
+      title: epLabel, 
+      audio: ep.audio || null, 
+      audioDesc: ep.audioDesc || null,
+      body: ep.live ? 'La registrazione della diretta comparirà qui.' : 'Il player dell\'episodio comparirà qui.' 
+    };
+    if (ep.docs.length === 0) { addNodes([epNode], ''); return; }
+    var docs;
+    if (ep.docs.length === 1) {
+      var only = ep.docs[0];
+      docs = { 
+        label: only.name, 
+        id: id + '/doc', 
+        path: base + 'DOCUMENTI\\' + only.f, 
+        title: only.name, 
+        gallery: only.gallery || null,
+        audio: only.audio || null,
+        audioDesc: only.audioDesc || null,
+        video: only.video || null,
+        forumUrl: only.forumUrl || null,
+        download: only.download || null,
+        textFile: only.textFile || null,
+        content: only.content || null,
+        body: only.galleryDesc || 'Il documento verrà mostrato qui.' 
+      };
+    } else {
+      docs = { folder: true, label: 'Documenti', id: id + '/docs', children: docNodes(ep.docs, id + '/docs', base + 'DOCUMENTI\\') };
+    }
+    addNodes([epNode, docs], '');
+  });
+
+  // Righe vuote di separazione tra Puntata 10 e Altri Documenti
+  var spacer = document.createElement('div');
+  spacer.style.height = '24px';
+  spacer.setAttribute('aria-hidden', 'true');
+  tree.appendChild(spacer);
+
+  // Voce "altri documenti"
+  var otherId = 'altri-doc';
+  addRow('', open[otherId] ? '[-] ' : '[+] ', 'ALTRI DOCUMENTI', otherId, {
+    folder: true,
+    onClick: function () { open[otherId] = !open[otherId]; render(); }
+  });
+  if (open[otherId]) {
+    addNodes(docNodes(otherDocs, otherId, 'C:\\BASTAASCOLTARE\\ALTRI_DOCUMENTI\\'), '');
+  }
+}
+
+var views = { home: document.getElementById('view-home'), info: document.getElementById('view-info'), file: document.getElementById('view-file') };
+function setView(name) {
+  Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
+  document.getElementById('nav-home').setAttribute('aria-current', name === 'home' ? 'page' : 'false');
+  document.getElementById('nav-info').setAttribute('aria-current', name === 'info' ? 'page' : 'false');
+  if (name !== 'file') { selected = null; render(); }
+}
+
+function showFile(node) {
+  document.getElementById('file-path').textContent = node.path;
+  document.getElementById('file-title').textContent = node.title;
+  
+  var bodyEl = document.getElementById('file-body');
+  bodyEl.innerHTML = '';
+  bodyEl.style.whiteSpace = 'normal';
+  bodyEl.className = 'body-content dim';
+
+  var docBox = document.getElementById('doc-box');
+  var gal = document.getElementById('file-gallery');
+  
+  if (node.gallery) {
+    bodyEl.style.whiteSpace = 'pre-wrap';
+    bodyEl.textContent = node.body;
+    docBox.classList.add('wide');
+    gal.hidden = false;
+    gal.innerHTML = '';
+    node.gallery.forEach(function (item, idx) {
+      var card = document.createElement('div');
+      card.className = 'gallery-item';
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', 'Ingrandisci ' + item.title);
+      
+      var img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.title;
+      img.loading = 'lazy';
+      
+      var cap = document.createElement('span');
+      cap.textContent = item.title;
+      
+      card.appendChild(img);
+      card.appendChild(cap);
+      
+      card.addEventListener('click', function () { openLightbox(node.gallery, idx); });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(node.gallery, idx); }
+      });
+      
+      gal.appendChild(card);
+    });
+  } else {
+    docBox.classList.remove('wide');
+    gal.hidden = true;
+    gal.innerHTML = '';
+
+    if (node.audio) {
+      bodyEl.className = 'body-content';
+      var desc = node.audioDesc || '<p class="dim">Riproduzione traccia audio:</p>';
+      bodyEl.innerHTML = desc + '<audio controls src="' + node.audio + '" style="width:100%; margin-top:6px;"></audio>';
+    } else if (node.video) {
+      bodyEl.className = 'body-content';
+      bodyEl.innerHTML = '<p class="dim">Riproduzione flusso video registrato:</p><video controls playsinline src="' + node.video + '" style="width:100%; max-height:65vh; border:2px solid var(--fg); background:#000; margin-top:6px;"></video>';
+    } else if (node.download) {
+      bodyEl.className = 'body-content';
+      bodyEl.innerHTML = '<p>Eseguibile Windows pronto per il trasferimento locale (v1.1.2).</p>' +
+        '<p>Software per la realizzazione di flussi video creepy.</p>' +
+        '<p class="dim">Requisiti: Windows 10/11 (64-bit). Leggere il file README.txt prima dell\'avvio.</p>' +
+        '<a class="btn" href="' + node.download + '" download>[ SCARICA BASTA_ASCOLTARE_CCTV_LAB.EXE ]</a>';
+    } else if (node.textFile) {
+      bodyEl.className = 'body-content';
+      bodyEl.textContent = 'Caricamento file di testo...';
+      fetch(node.textFile)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(function(txt) {
+          bodyEl.style.whiteSpace = 'pre-wrap';
+          bodyEl.textContent = txt;
+        })
+        .catch(function() {
+          bodyEl.innerHTML = '<p class="dim">Anteprima diretta bloccata dal browser in locale. Puoi aprirlo direttamente:</p><a class="btn" href="' + node.textFile + '" target="_blank">[ APRI README.TXT ]</a>';
+        });
+    } else if (node.forumUrl) {
+      bodyEl.className = 'body-content';
+      bodyEl.innerHTML = '<p>Archivio web recuperato (copia cache del 03/07/2008).</p>' +
+        '<p class="dim">Clicca sul pulsante qui sotto per aprire la pagina ricostruita del forum in una nuova scheda:</p>' +
+        '<a class="btn" href="' + encodeURI(node.forumUrl) + '" target="_blank">[ APRI FORUM: copertinouberalles.html ]</a>';
+    } else if (node.content) {
+      bodyEl.className = 'body-content';
+      bodyEl.style.whiteSpace = 'pre-wrap';
+      bodyEl.textContent = node.content;
+    } else {
+      bodyEl.textContent = node.body;
+    }
+  }
+  
+  setView('file');
+}
+
+/* ---------- Gestione Lightbox / Carosello Dinamico ---------- */
+var activeGallery = [];
+var lbIndex = 0;
+var lightbox = document.getElementById('lightbox');
+var lbImg = document.getElementById('lb-img');
+var lbCaption = document.getElementById('lb-caption');
+var lbCounter = document.getElementById('lb-counter');
+
+function openLightbox(galleryList, idx) {
+  activeGallery = galleryList;
+  lbIndex = idx;
+  updateLightbox();
+  lightbox.hidden = false;
+  document.getElementById('lb-close').focus();
+}
+
+function updateLightbox() {
+  var item = activeGallery[lbIndex];
+  lbImg.src = item.src;
+  lbImg.alt = item.title;
+  lbCaption.textContent = '> ' + item.title.toUpperCase() + ' (' + item.src + ')';
+  lbCounter.textContent = '[' + (lbIndex + 1) + ' / ' + activeGallery.length + ']';
+}
+
+function closeLightbox() {
+  lightbox.hidden = true;
+}
+
+function prevLightbox() {
+  if (!activeGallery.length) return;
+  lbIndex = (lbIndex - 1 + activeGallery.length) % activeGallery.length;
+  updateLightbox();
+}
+
+function nextLightbox() {
+  if (!activeGallery.length) return;
+  lbIndex = (lbIndex + 1) % activeGallery.length;
+  updateLightbox();
+}
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-close-top').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click', prevLightbox);
+document.getElementById('lb-next').addEventListener('click', nextLightbox);
+lightbox.addEventListener('click', function (e) {
+  if (e.target === lightbox || e.target.classList.contains('lb-img-wrap')) closeLightbox();
+});
+
+function fromHash() { setView(location.hash === '#info' ? 'info' : 'home'); }
+window.addEventListener('hashchange', fromHash);
+document.getElementById('file-back').addEventListener('click', function () { setView('home'); });
+
+document.addEventListener('keydown', function (e) {
+  if (!lightbox.hidden) {
+    if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prevLightbox(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); nextLightbox(); }
+    return;
+  }
+  if (e.key === 'F1') { e.preventDefault(); location.hash = '#info'; }
+  if (e.key === 'Escape') { location.hash = '#home'; setView('home'); }
+});
+
+document.getElementById('contact').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var s = document.getElementById('status');
+  var ok = ['nome', 'email', 'msg'].every(function (id) { return document.getElementById(id).value.trim(); });
+  s.textContent = ok ? 'Anteprima: il modulo non è ancora collegato a un servizio di invio.' : 'Compila nome, email e messaggio.';
+});
+
+render();
+fromHash();
+</script>
+
+</body></html>
